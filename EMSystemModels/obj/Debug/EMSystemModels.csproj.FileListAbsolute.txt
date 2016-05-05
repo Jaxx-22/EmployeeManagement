@@ -1,0 +1,5 @@
+C:\Users\nadavis\other\EmployeeManagement\EMSystemModels\bin\Debug\EMSystemModels.dll
+C:\Users\nadavis\other\EmployeeManagement\EMSystemModels\bin\Debug\EMSystemModels.pdb
+C:\Users\nadavis\other\EmployeeManagement\EMSystemModels\obj\Debug\EMSystemModels.dll
+C:\Users\nadavis\other\EmployeeManagement\EMSystemModels\obj\Debug\EMSystemModels.pdb
+C:\Users\nadavis\other\EmployeeManagement\EMSystemModels\obj\Debug\EMSystemModels.csprojResolveAssemblyReference.cache
