@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("EMSystemModels")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("DealerSocket, Inc.")]
+[assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("EMSystemModels")]
-[assembly: AssemblyCopyright("Copyright © DealerSocket, Inc. 2016")]
+[assembly: AssemblyCopyright("")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
