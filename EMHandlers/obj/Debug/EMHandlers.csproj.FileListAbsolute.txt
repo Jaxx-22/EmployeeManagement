@@ -1,8 +1,0 @@
-C:\Users\nadavis\other\EmployeeManagement\EMHandlers\obj\Debug\EMHandlers.csprojResolveAssemblyReference.cache
-C:\Users\nadavis\other\EmployeeManagement\EMHandlers\bin\EMHandlers.dll.config
-C:\Users\nadavis\other\EmployeeManagement\EMHandlers\bin\EMHandlers.dll
-C:\Users\nadavis\other\EmployeeManagement\EMHandlers\bin\EMHandlers.pdb
-C:\Users\nadavis\other\EmployeeManagement\EMHandlers\bin\EMSystemModels.dll
-C:\Users\nadavis\other\EmployeeManagement\EMHandlers\bin\EMSystemModels.pdb
-C:\Users\nadavis\other\EmployeeManagement\EMHandlers\obj\Debug\EMHandlers.dll
-C:\Users\nadavis\other\EmployeeManagement\EMHandlers\obj\Debug\EMHandlers.pdb

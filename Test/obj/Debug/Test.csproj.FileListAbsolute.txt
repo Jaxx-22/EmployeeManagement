@@ -1,0 +1,14 @@
+C:\Users\nadavis\other\EmployeeManagement\Test\bin\Test.dll.config
+C:\Users\nadavis\other\EmployeeManagement\Test\bin\Test.dll
+C:\Users\nadavis\other\EmployeeManagement\Test\bin\Test.pdb
+C:\Users\nadavis\other\EmployeeManagement\Test\bin\Newtonsoft.Json.dll
+C:\Users\nadavis\other\EmployeeManagement\Test\bin\System.Net.Http.Formatting.dll
+C:\Users\nadavis\other\EmployeeManagement\Test\bin\System.Web.Http.dll
+C:\Users\nadavis\other\EmployeeManagement\Test\bin\System.Web.Http.WebHost.dll
+C:\Users\nadavis\other\EmployeeManagement\Test\bin\Newtonsoft.Json.xml
+C:\Users\nadavis\other\EmployeeManagement\Test\bin\System.Net.Http.Formatting.xml
+C:\Users\nadavis\other\EmployeeManagement\Test\bin\System.Web.Http.xml
+C:\Users\nadavis\other\EmployeeManagement\Test\bin\System.Web.Http.WebHost.xml
+C:\Users\nadavis\other\EmployeeManagement\Test\obj\Debug\Test.csprojResolveAssemblyReference.cache
+C:\Users\nadavis\other\EmployeeManagement\Test\obj\Debug\Test.dll
+C:\Users\nadavis\other\EmployeeManagement\Test\obj\Debug\Test.pdb
