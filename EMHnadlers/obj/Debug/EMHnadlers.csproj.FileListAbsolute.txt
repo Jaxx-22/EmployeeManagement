@@ -16,3 +16,6 @@ C:\Users\nadavis\other\EmployeeManagement\EMHnadlers\bin\EMSystemModels.dll
 C:\Users\nadavis\other\EmployeeManagement\EMHnadlers\bin\EMSystemModels.pdb
 C:\Users\nadavis\other\EmployeeManagement\EMHnadlers\bin\System.Data.SQLite.dll
 C:\Users\nadavis\other\EmployeeManagement\EMHnadlers\bin\System.Data.SQLite.xml
+C:\Users\nadavis\other\EmployeeManagement\EMHnadlers\bin\System.Web.Cors.dll
+C:\Users\nadavis\other\EmployeeManagement\EMHnadlers\bin\System.Web.Http.Cors.dll
+C:\Users\nadavis\other\EmployeeManagement\EMHnadlers\bin\System.Web.Http.Cors.xml

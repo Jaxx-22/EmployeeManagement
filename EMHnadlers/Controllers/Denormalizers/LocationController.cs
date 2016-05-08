@@ -8,10 +8,12 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Cors;
 
 namespace EMAPIHandlers.Controllers.Denormalizers
 {
     [RoutePrefix("api/location")]
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class LocationController : ApiController
     {
         private Database _databaseContex;

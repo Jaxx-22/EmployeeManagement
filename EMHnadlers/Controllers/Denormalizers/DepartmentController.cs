@@ -9,10 +9,12 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Cors;
 
 namespace EMAPIHandlers.Controllers.Denormalizers
 {
     [RoutePrefix("api/department")]
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class DepartmentController : ApiController
     {
         private Database _databaseContex;
