@@ -45,6 +45,7 @@
     <Compile Include="Commands\CreateDepartment.cs" />
     <Compile Include="Commands\CreateLocation.cs" />
     <Compile Include="Commands\CreateNewEmployee.cs" />
+    <Compile Include="Commands\GetEmployee.cs" />
     <Compile Include="Commands\UpdateEmployeeAddress.cs" />
     <Compile Include="Commands\UpdateDepartment.cs" />
     <Compile Include="Commands\UpdateLocation.cs" />
@@ -58,9 +59,7 @@
     <Compile Include="Models\Supervisor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Queries\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

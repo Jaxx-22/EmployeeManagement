@@ -5,7 +5,17 @@
 <html>
 <head runat="server">
     <meta name="viewport" content="width=device-width" />
-    <title>Employees</title>
+    <title>Location</title>
+    <style type="text/css">
+        #table{
+            padding:25px;
+        }
+        span{
+            margin:5px;
+            padding:10px;
+        }
+
+    </style>
     <script src="../../Content/Scripts/jquery-1.10.2.min.js"></script>
     <script type='text/javascript'>
         $(document).ready(function () {
@@ -35,8 +45,8 @@
             "</span><span>" +
                 location.Address.State +
             "</span><span>" +
-                location.Address.Zip +
-            "</span></section><span><a onClick='Remove(" + location.LocationId + ")' >Remove</a></span></div>").appendTo("#table");
+                location.Address.zip +
+            "</span></section><span><input type='button' onClick='Remove(" + location.LocationId + ")' value='Remove' ></input></span></div>").appendTo("#table");
         }
 
         function Remove(id) {
@@ -46,7 +56,7 @@
                 data: JSON.stringify({ LocationId: id }),
                 contentType: 'application/json; charset=UTF-8',
                 success: function (data) {
-                    alert("success");
+                    window.location.href = "http://localhost:51066/Location/Index";
                 },
                 error: function (e) {
                     alert(e);

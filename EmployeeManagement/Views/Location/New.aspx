@@ -4,7 +4,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title>New Employee</title>
+    <title>New Location</title>
     <script src="../../Content/Scripts/jquery-1.10.2.min.js"></script>
     <script type='text/javascript'>
         $(document).ready(function () {
@@ -22,7 +22,7 @@
                     data: JSON.stringify({ Name: Name, Address: { Street: Street, City: City, State: State, Zip: Zip } }),
                     contentType: 'application/json; charset=UTF-8',
                     success: function (data) {
-                        alert('success');
+                        window.location.href = "http://localhost:51066/Location/Index";
                     },
                     error: function (e) {
                         alert(e);
@@ -32,6 +32,22 @@
         
     });
     </script>
+    <style type="text/css">
+        label{
+            padding:25px;
+        }
+        section{
+            margin-top:15px;
+        }
+        span{
+            margin:5px;
+            padding:10px;
+        }
+        #submit{
+                margin-top: 10px;
+        }
+
+    </style>
 </head>
 <body>
     <form id="Form">

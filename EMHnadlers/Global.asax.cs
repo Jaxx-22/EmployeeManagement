@@ -39,7 +39,7 @@ namespace EMHnadlers
                 }
             }
             m_dbConnection.Close();
-            testDepartments();
+            //testDepartments();
         }
 
         private void testDepartments()

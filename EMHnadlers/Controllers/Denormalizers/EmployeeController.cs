@@ -15,7 +15,6 @@ using System.Web.Http.Cors;
 namespace EMAPIHandlers.Controllers.Denormalizers
 {
     [RoutePrefix("api/employee")]
-    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class EmployeeController : ApiController
     {
         private Database _databaseContex;
@@ -27,7 +26,8 @@ namespace EMAPIHandlers.Controllers.Denormalizers
             _databaseContex = new Database(m_dbConnection);
         }
 
-        public Employee GetEmployee(int id)
+        [Route("get/{id}")]
+        public Employee GetEmployee( int id)
         {
             var emp = fetchEmployee(id);
             _databaseContex.CloseSharedConnection();

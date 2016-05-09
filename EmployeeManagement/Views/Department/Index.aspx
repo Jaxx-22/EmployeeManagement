@@ -5,7 +5,17 @@
 <html>
 <head runat="server">
     <meta name="viewport" content="width=device-width" />
-    <title>Employees</title>
+    <title>Departments</title>
+    <style type="text/css">
+        #table{
+            padding:25px;
+        }
+        span{
+            margin:5px;
+            padding:10px;
+        }
+
+    </style>
     <script src="../../Content/Scripts/jquery-1.10.2.min.js"></script>
     <script type='text/javascript'>
         $(document).ready(function () {
@@ -28,7 +38,7 @@
         function createRow(departments) {
             $("<div><span>" +
                 departments.Name +
-            "</span><span><a onClick='Remove(" + departments.DepartmentId + ")' >Remove</a></span></div>").appendTo("#table");
+            "</span><span><input type='button' onClick='Remove(" + departments.DepartmentId + ")' value='Remove'></input></span></div>").appendTo("#table");
         }
 
         function Remove(id) {
@@ -38,7 +48,7 @@
                 data: JSON.stringify({ DepartmentId: id }),
                 contentType: 'application/json; charset=UTF-8',
                 success: function (data) {
-                    alert("success");
+                    window.location.href = "http://localhost:51066/Department/Index";
                 },
                 error: function (e) {
                     alert(e);

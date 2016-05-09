@@ -5,7 +5,13 @@
 <html>
 <head runat="server">
     <meta name="viewport" content="width=device-width" />
-    <title>Index</title>
+    <title>Home</title>
+    <style type="text/css">
+       .button{
+            margin-top: 10px
+        }
+
+    </style>
 </head>
 <body>
     <div>

@@ -4,7 +4,23 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title>New Employee</title>
+    <title>Employee Details</title>
+    <style type="text/css">
+        label{
+            padding:25px;
+        }
+        section{
+            margin-top: 15px
+        }
+        span{
+            margin:5px;
+            padding:10px;
+        }
+        #submit{
+            margin-top: 10px
+        }
+
+    </style>
     <script src="../../Content/Scripts/jquery-1.10.2.min.js"></script>
     <script type='text/javascript'>
         var addressCount = 0;
@@ -13,79 +29,92 @@
         var supervisorList = new Array();
         var locationList = new Array();
         $(document).ready(function () {
+            var id = $('#empId').val();
+
+
             $.ajax({
                 url: "http://localhost:55739/api/employee/supervisor",
                 type: "GET",
                 success: function (data) {
-                    for(var i = 0; i < data.length; i++)
-                    {
+                    for (var i = 0; i < data.length; i++) {
                         var id = data[i].SupervisorId;
                         var name = data[i].SupervisorName;
-                        supervisorList.push({Id: id, Name:name});
+                        supervisorList.push({ Id: id, Name: name });
                     }
                 },
-                error: function(e)
-                {
+                error: function (e) {
                     alert(e);
                 },
-            }); 
+            });
 
             $.ajax({
                 url: "http://localhost:55739/api/department/all",
                 type: "GET",
                 success: function (data) {
-                    for(var i = 0; i < data.length; i++)
-                    {
+                    for (var i = 0; i < data.length; i++) {
                         var id = data[i].DepartmentId;
                         var name = data[i].Name;
-                        departmentList.push({Id: id, Name:name});
+                        departmentList.push({ Id: id, Name: name });
                     }
                 },
-                error: function(e)
-                {
+                error: function (e) {
                     alert(e);
                 },
-            }); 
-            
+            });
+
             $.ajax({
                 url: "http://localhost:55739/api/location/all",
                 type: "GET",
                 success: function (data) {
-                    for(var i = 0; i < data.length; i++)
-                    {
+                    for (var i = 0; i < data.length; i++) {
                         var id = data[i].LocationId;
                         var name = data[i].Name;
-                        locationList.push({Id: id, Name:name});
+                        locationList.push({ Id: id, Name: name });
                     }
                 },
-                error: function(e)
-                {
+                error: function (e) {
                     alert(e);
                 },
             });
 
-            $('#submit').click(function()
-            {
-                var name = $('#Name').val();
-                var dateofbirth = $('#DateOfBirth').val();
-                var socialSecurityNumber = $('#SocialSecurityNumber').val();
-                $.ajax({
-                    url: "http://localhost:55739/api/employee/create",
-                    type: "POST",
-                    data: CreateJSONString(),
-                    contentType: 'application/json; charset=UTF-8',
-                    success: function (data) {
-                        alert('success');
-                    },
-                    error: function (e) {
-                        alert(e);
-                    },
-                });
+            $.ajax({
+                url: "http://localhost:55739/api/employee/get/" + id,
+                type: "GET",
+                success: function (data) {
+                    $('#Name').val(data.Name)
+                    var dob = new Date(data.DateOfBirth);
+                    $('#DateOfBirth').val((dob.getMonth()+1) + '/' + (dob.getDate()+1) + '/' + dob.getYear());
+                    $('#SocialSecurityNumber').val(data.SocialSecurityNumber);
+                    for (var i = 0; i < data.Addresses.length; i++) {
+                        addAddress();
+                        var add = data.Addresses[i];
+                        $('#Street' + i).val(add.Street)
+                        $('#City' + i).val(add.City);
+                        $('#State' + i).val(add.State);
+                        $('#Zip' + i).val(add.zip);
+                    }
+
+                    for (var i = 0; i < data.Records.length; i++) {
+                        addNewRecord();
+                        var rec = data.Records[i];
+                        var hd = new Date(rec.HireDate);
+                        $('#selectDepartment' + i).val(rec.Department.DepartmentId + ',' + rec.Department.Name);
+                        $('#selectLocation' + i).val(rec.Location.LocationId + ',' + rec.Location.Name);
+                        $('#selectSupervisor' + i).val(rec.Supervisor.SupervisorId + ',' + rec.Supervisor.SupervisorName);
+                        $('#IsSupervisor' + i).prop( "checked",rec.IsSupervisor);
+                        $('#Salary' + i).val(rec.Salary);
+                        $('#HireDate' + i).val((hd.getMonth()+1) + '/' + (hd.getDate()+1) + '/' + hd.getYear());
+                    }
+                },
+                error: function (e) {
+                    alert(e);
+                },
             });
-        
         });
 
-        function addNewAddress()
+            
+
+        function addAddress()
         {
             $('<div id="AddDiv'+
                 addressCount+
@@ -105,19 +134,12 @@
                 addressCount +
                 '">Zip</label><input type="text"  id="Zip'+
                 addressCount +
-                '"/></span><span><a onclick="RemoveAddress('+
-                addressCount+
-                ')">Remove</a></span></div>').appendTo('#divAddresses');
+                '"/></span></div>').appendTo('#divAddresses');
 
             addressCount = addressCount + 1;
         }
 
-        function RemoveAddress(addId)
-        {
-            $('#AddDiv'+addId).remove();
-        }
-
-        function addNewRecord()
+                function addNewRecord()
         {
             $('<div id="RecDiv'+
                 recordCount+
@@ -151,16 +173,9 @@
                 recordCount +
                 '">Hire Date</label><input type="text"  id="HireDate'+
                 recordCount +
-                '"/></span><span><a onclick="RemoveRecord('+
-                recordCount+
-                ')">Remove</a></span></div>').appendTo('#divRecords');
+                '"/></span></div>').appendTo('#divRecords');
 
             recordCount = recordCount + 1;
-        }
-
-        function RemoveRecord(recId)
-        {
-            $('#RecDiv'+recId).remove();
         }
 
         function CreateCombobox(id, parentid, list)
@@ -175,63 +190,10 @@
             returnstring = returnstring + '</select>';
             return returnstring;
         }
-
-        function CreateJSONString()
-        {
-            var name = $('#Name').val();
-            var dateofbirth = $('#DateOfBirth').val();
-            var socialSecurityNumber = $('#SocialSecurityNumber').val();
-            var Adresses = new Array();
-            var Records = new Array();
-
-            for(var i = 0; i < addressCount; i++)
-            {
-                var street = $('#Street'+i).val();
-                var city = $('#City'+i).val();
-                var state = $('#State'+i).val();
-                var zip = $('#Zip'+i).val();
-                if(street !== undefined)
-                {
-                    Adresses.push({Street: street, City: city, State:state, zip:zip});
-                }
-            }
-
-            for(var i = 0; i < recordCount; i++)
-            {
-                var department = $('#selectDepartment'+i).val();
-                var location = $('#selectLocation'+i).val();
-                var Supervisor = $('#selectSupervisor'+i).val();
-                var IsSupervisor = $('#IsSupervisor'+i).val();
-                var Salary = $('#Salary'+i).val();
-                var HireDate = $('#HireDate'+i).val();
-                if(Salary !== undefined)
-                {
-                    var departmentValues = department.split(',');
-                    var departmentId = departmentValues[0];
-                    var locationId = location.split(',')[0];
-                    var supId = 0;
-                    var supName = null;
-                    if(Supervisor !=="Select")
-                    {
-                        supId = Supervisor.split(',')[0];
-                        supName = Supervisor.split(',')[1];
-                    }
-
-                    Records.push({department: {DepartmentId:departmentId}, 
-                        Location:{LocationId:locationId},
-                        Supervisor : {SupervisorId :supId, SupervisorName: supName},
-                        IsSupervisor: IsSupervisor,
-                        HireDate : HireDate,
-                        Salary : Salary});
-                }
-            }
-            return JSON.stringify({Employee : {name,dateofbirth,socialSecurityNumber}, Adresses : Adresses, Records : Records})
-        }
-
-
     </script>
 </head>
 <body>
+    <input type="hidden" hidden="hidden" value="<%=ViewData["Id"] %>" id="empId"/>
     <form id="newEmployeeForm">
     <div>
         <div>
@@ -248,16 +210,13 @@
                 <input type="text"  id="SocialSecurityNumber"/>
             </span>
             <section title="Addresses">
-                <input id="AddAddressBtn" onclick="addNewAddress()" value="Add Address"/>
                 <div id="divAddresses"></div>
             </section>
             <section title="Records">
-                <input id="AddRecordBtn" onclick="addNewRecord()" value="Add Record"/>
                 <div id="divRecords"></div>
             </section>
         </div>
     </div>
-        <input id="submit" type="button" value="Submit"/>
     </form>
 </body>
 </html>

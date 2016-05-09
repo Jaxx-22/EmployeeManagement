@@ -5,6 +5,22 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title>New Employee</title>
+    <style type="text/css">
+        label{
+            padding:25px;
+        }
+        section{
+            margin-top: 15px
+        }
+        span{
+            margin:5px;
+            padding:10px;
+        }
+        #submit{
+            margin-top: 10px
+        }
+
+    </style>
     <script src="../../Content/Scripts/jquery-1.10.2.min.js"></script>
     <script type='text/javascript'>
         var addressCount = 0;
@@ -75,7 +91,7 @@
                     data: CreateJSONString(),
                     contentType: 'application/json; charset=UTF-8',
                     success: function (data) {
-                        alert('success');
+                        window.location.href = "http://localhost:51066/Employees/Index";
                     },
                     error: function (e) {
                         alert(e);
@@ -105,9 +121,9 @@
                 addressCount +
                 '">Zip</label><input type="text"  id="Zip'+
                 addressCount +
-                '"/></span><span><a onclick="RemoveAddress('+
+                '"/></span><span><input type="button" onclick="RemoveAddress('+
                 addressCount+
-                ')">Remove</a></span></div>').appendTo('#divAddresses');
+                ')" value="Remove"></input></span></div>').appendTo('#divAddresses');
 
             addressCount = addressCount + 1;
         }
@@ -151,9 +167,9 @@
                 recordCount +
                 '">Hire Date</label><input type="text"  id="HireDate'+
                 recordCount +
-                '"/></span><span><a onclick="RemoveRecord('+
+                '"/></span><span><input type="button" onclick="RemoveRecord('+
                 recordCount+
-                ')">Remove</a></span></div>').appendTo('#divRecords');
+                ')" value="Remove"></input></span></div>').appendTo('#divRecords');
 
             recordCount = recordCount + 1;
         }
@@ -201,7 +217,7 @@
                 var department = $('#selectDepartment'+i).val();
                 var location = $('#selectLocation'+i).val();
                 var Supervisor = $('#selectSupervisor'+i).val();
-                var IsSupervisor = $('#IsSupervisor'+i).val();
+                var IsSupervisor = $('#IsSupervisor'+i).val() === 'on';
                 var Salary = $('#Salary'+i).val();
                 var HireDate = $('#HireDate'+i).val();
                 if(Salary !== undefined)
@@ -248,11 +264,11 @@
                 <input type="text"  id="SocialSecurityNumber"/>
             </span>
             <section title="Addresses">
-                <input id="AddAddressBtn" onclick="addNewAddress()" value="Add Address"/>
+                <input id="AddAddressBtn" type="button" onclick="addNewAddress()" value="Add Address"/>
                 <div id="divAddresses"></div>
             </section>
             <section title="Records">
-                <input id="AddRecordBtn" onclick="addNewRecord()" value="Add Record"/>
+                <input id="AddRecordBtn" type="button" onclick="addNewRecord()" value="Add Record"/>
                 <div id="divRecords"></div>
             </section>
         </div>

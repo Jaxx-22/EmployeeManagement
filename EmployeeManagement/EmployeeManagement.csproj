@@ -148,6 +148,7 @@
     <Content Include="Content\Scripts\respond.min.js" />
     <None Include="Content\Scripts\_references.js" />
     <Content Include="Global.asax" />
+    <Content Include="Views\Employees\Details.aspx" />
     <Content Include="Views\Location\Index.aspx" />
     <Content Include="Views\Location\New.aspx" />
     <Content Include="Views\Department\Index.aspx" />

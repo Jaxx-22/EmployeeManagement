@@ -35,7 +35,7 @@
                  (dob.getMonth()+ 1) + "/" + (dob.getDate() + 1) + "/" + dob.getYear() +
             "</span><span>" +
              employee.SocialSecurityNumber +
-            "</span><span> <a onClick='seeDetails(" + employee.EmployeeId + ")'>Details</a></span><span><a  onClick='Fire(" + employee.EmployeeId + ")'>Fire</a></span></div>").appendTo("#employeeTable");
+            "</span><span> <a href='/employees/Details/" + employee.EmployeeId + "'>Details</a></span><span><input type='button'a  onClick='Fire(" + employee.EmployeeId + ")'value='Fire'></input></span></div>").appendTo("#table");
         }
 
         function Fire(id)
@@ -46,7 +46,7 @@
                 data: JSON.stringify({EmployeeId : id}),
                 contentType: 'application/json; charset=UTF-8',
                 success: function (data) {
-                    alert("success");
+                    window.location.href = "http://localhost:51066/Employees/Index";
                 },
                 error: function (e) {
                     alert(e);
@@ -55,6 +55,16 @@
         }
 
     </script>
+    <style type="text/css">
+        #table{
+            padding:25px;
+        }
+        span{
+            margin:5px;
+            padding:10px;
+        }
+
+    </style>
 </head>
 <body>
     <div>
@@ -63,8 +73,14 @@
                <button>New Employee</button>
            </a>
         </div>
-       <div id="employeeTable">
-        
+       <div id="table">
+        <div><span>
+                Name
+            </span><span>
+                 DOB
+            </span><span>
+             SS#
+            </span>
         </div>
     </div>
 </body>

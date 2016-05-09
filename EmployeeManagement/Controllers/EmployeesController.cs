@@ -18,9 +18,10 @@ namespace EmployeeManagement.Controllers
         }
 
         [HttpGet]
-        public ActionResult Details(Employee e)
+        public ActionResult Details(int id)
         {
-            return View(e);
+            ViewData["Id"] = id;
+            return View();
         }
 
         [HttpGet]
