@@ -14,6 +14,9 @@
             margin:5px;
             padding:10px;
         }
+        .button{
+            margin-top: 10px
+        }
 
     </style>
     <script src="../../Content/Scripts/jquery-1.10.2.min.js"></script>
@@ -69,10 +72,16 @@
 <body>
     <div>
         <div class="button">
+           <a href='/Home/Index'>
+               <button>Home</button>
+           </a>
+        </div>
+        <div class="button">
            <a href='New'>
                <button>New Location</button>
            </a>
         </div>
+        
        <div id="table">
         
         </div>
