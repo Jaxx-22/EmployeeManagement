@@ -6,7 +6,9 @@ C:\Users\nadavis\other\EmployeeManagement\EmployeeManagement\bin\Microsoft.Web.I
 C:\Users\nadavis\other\EmployeeManagement\EmployeeManagement\bin\Microsoft.Web.Mvc.FixedDisplayModes.dll
 C:\Users\nadavis\other\EmployeeManagement\EmployeeManagement\bin\Newtonsoft.Json.dll
 C:\Users\nadavis\other\EmployeeManagement\EmployeeManagement\bin\System.Net.Http.Formatting.dll
+C:\Users\nadavis\other\EmployeeManagement\EmployeeManagement\bin\System.Web.Cors.dll
 C:\Users\nadavis\other\EmployeeManagement\EmployeeManagement\bin\System.Web.Helpers.dll
+C:\Users\nadavis\other\EmployeeManagement\EmployeeManagement\bin\System.Web.Http.Cors.dll
 C:\Users\nadavis\other\EmployeeManagement\EmployeeManagement\bin\System.Web.Http.dll
 C:\Users\nadavis\other\EmployeeManagement\EmployeeManagement\bin\System.Web.Http.WebHost.dll
 C:\Users\nadavis\other\EmployeeManagement\EmployeeManagement\bin\System.Web.Mvc.dll
@@ -17,9 +19,10 @@ C:\Users\nadavis\other\EmployeeManagement\EmployeeManagement\bin\System.Web.WebP
 C:\Users\nadavis\other\EmployeeManagement\EmployeeManagement\bin\EMSystemModels.pdb
 C:\Users\nadavis\other\EmployeeManagement\EmployeeManagement\bin\Newtonsoft.Json.xml
 C:\Users\nadavis\other\EmployeeManagement\EmployeeManagement\bin\System.Net.Http.Formatting.xml
-C:\Users\nadavis\other\EmployeeManagement\EmployeeManagement\bin\System.Web.Helpers.xml
 C:\Users\nadavis\other\EmployeeManagement\EmployeeManagement\bin\System.Web.Http.xml
+C:\Users\nadavis\other\EmployeeManagement\EmployeeManagement\bin\System.Web.Http.Cors.xml
 C:\Users\nadavis\other\EmployeeManagement\EmployeeManagement\bin\System.Web.Http.WebHost.xml
+C:\Users\nadavis\other\EmployeeManagement\EmployeeManagement\bin\System.Web.Helpers.xml
 C:\Users\nadavis\other\EmployeeManagement\EmployeeManagement\bin\System.Web.Mvc.xml
 C:\Users\nadavis\other\EmployeeManagement\EmployeeManagement\bin\System.Web.Razor.xml
 C:\Users\nadavis\other\EmployeeManagement\EmployeeManagement\bin\System.Web.WebPages.xml
@@ -28,6 +31,3 @@ C:\Users\nadavis\other\EmployeeManagement\EmployeeManagement\bin\System.Web.WebP
 C:\Users\nadavis\other\EmployeeManagement\EmployeeManagement\obj\Debug\EmployeeManagement.csprojResolveAssemblyReference.cache
 C:\Users\nadavis\other\EmployeeManagement\EmployeeManagement\obj\Debug\EmployeeManagement.dll
 C:\Users\nadavis\other\EmployeeManagement\EmployeeManagement\obj\Debug\EmployeeManagement.pdb
-C:\Users\nadavis\other\EmployeeManagement\EmployeeManagement\bin\System.Web.Cors.dll
-C:\Users\nadavis\other\EmployeeManagement\EmployeeManagement\bin\System.Web.Http.Cors.dll
-C:\Users\nadavis\other\EmployeeManagement\EmployeeManagement\bin\System.Web.Http.Cors.xml

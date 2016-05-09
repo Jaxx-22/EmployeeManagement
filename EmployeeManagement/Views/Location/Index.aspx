@@ -10,12 +10,12 @@
     <script type='text/javascript'>
         $(document).ready(function () {
             $.ajax({
-                url: "http://localhost:55739/api/employee/all",
+                url: "http://localhost:55739/api/location/all",
                 type: "GET",
                 success: function (data) {
                     for (var i = 0; i < data.length; i++)
                     {
-                        createEmployeeRow(data[i]);
+                        createRow(data[i]);
                     }
                 },
                 error: function(e)
@@ -25,25 +25,25 @@
             });            
         });
 
-        function createEmployeeRow(employee) {
-            
-            var dob = new Date(employee.DateOfBirth);
-
+        function createRow(location) {
             $("<div><span>" +
-                employee.Name +
+                location.Name +
+            "</span><section title='Address'><span>" +
+                location.Address.Street +
             "</span><span>" +
-                 (dob.getMonth()+ 1) + "/" + (dob.getDate() + 1) + "/" + dob.getYear() +
+                location.Address.City +
             "</span><span>" +
-             employee.SocialSecurityNumber +
-            "</span><span> <a onClick='seeDetails(" + employee.EmployeeId + ")'>Details</a></span><span><a  onClick='Fire(" + employee.EmployeeId + ")'>Fire</a></span></div>").appendTo("#employeeTable");
+                location.Address.State +
+            "</span><span>" +
+                location.Address.Zip +
+            "</span></section><span><a onClick='Remove(" + location.LocationId + ")' >Remove</a></span></div>").appendTo("#table");
         }
 
-        function Fire(id)
-        {
+        function Remove(id) {
             $.ajax({
-                url: "http://localhost:55739/api/employee/delete",
+                url: "http://localhost:55739/api/location/delete",
                 type: "Post",
-                data: JSON.stringify({EmployeeId : id}),
+                data: JSON.stringify({ LocationId: id }),
                 contentType: 'application/json; charset=UTF-8',
                 success: function (data) {
                     alert("success");
@@ -60,10 +60,10 @@
     <div>
         <div class="button">
            <a href='New'>
-               <button>New Employee</button>
+               <button>New Location</button>
            </a>
         </div>
-       <div id="employeeTable">
+       <div id="table">
         
         </div>
     </div>

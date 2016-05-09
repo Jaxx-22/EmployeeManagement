@@ -6,7 +6,7 @@ using System.Web;
 
 namespace EMAPIHandlers.Controllers.Denormalizers.Models
 {
-    [TableName("dboEmployeeAddress")]
+    [TableName("dboEmployeeAddresses")]
     public class dboEmployeeAddress
     {
         public int EmployeeId { get; set; }

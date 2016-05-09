@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EMSystemModels.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -15,5 +16,24 @@ namespace EmployeeManagement.Controllers
         {
             return View();
         }
+
+        [HttpGet]
+        public ActionResult Details(Employee e)
+        {
+            return View(e);
+        }
+
+        [HttpGet]
+        public ActionResult Edit(Employee e)
+        {
+            return View(e);
+        }
+
+        [HttpGet]
+        public ActionResult New()
+        {
+            return View();
+        }
+
     }
 }

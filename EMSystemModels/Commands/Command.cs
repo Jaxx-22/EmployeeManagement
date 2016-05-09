@@ -15,19 +15,16 @@ namespace EMSystemModels.Commands
 
     public class EmployeeCommand : ICommand
     {
-        [Required]
         public int EmployeeId { get; set; }
     }
 
     public class DepartmentCommand : ICommand
     {
-        [Required]
         public int DepartmentId { get; set; }
     }
 
     public class LocationCommand : ICommand
     {
-        [Required]
         public int LocationId { get; set; }
     }
 }

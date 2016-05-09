@@ -120,8 +120,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\DepartmentController.cs" />
     <Compile Include="Controllers\EmployeesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LocationController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -146,7 +148,12 @@
     <Content Include="Content\Scripts\respond.min.js" />
     <None Include="Content\Scripts\_references.js" />
     <Content Include="Global.asax" />
+    <Content Include="Views\Location\Index.aspx" />
+    <Content Include="Views\Location\New.aspx" />
+    <Content Include="Views\Department\Index.aspx" />
+    <Content Include="Views\Department\New.aspx" />
     <Content Include="Views\Employees\Index.aspx" />
+    <Content Include="Views\Employees\New.aspx" />
     <Content Include="Views\Home\Index.aspx" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">

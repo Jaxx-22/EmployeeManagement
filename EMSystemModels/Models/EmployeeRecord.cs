@@ -12,8 +12,7 @@ namespace EMSystemModels.Models
         public Location Location { get; set; }
         public bool IsSupervisor { get; set; }
         public double Salary { get; set; }
-        public int SupervisorId { get; set; }
-        public string SupervisorName { get; set; }
+        public Supervisor Supervisor { get; set; }
         public DateTime HireDate { get; set; }
     }
 }

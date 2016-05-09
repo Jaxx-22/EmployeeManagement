@@ -15,12 +15,12 @@
            </a>
        </div>
         <div class="button">
-           <a href="">
+           <a href="/Location/Index">
                <button>View Locations</button>
            </a>
        </div>
         <div class="button">
-           <a href="">
+           <a href="/Department/Index">
                <button>View Departments</button>
            </a>
        </div>

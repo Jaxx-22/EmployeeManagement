@@ -10,12 +10,12 @@
     <script type='text/javascript'>
         $(document).ready(function () {
             $.ajax({
-                url: "http://localhost:55739/api/employee/all",
+                url: "http://localhost:55739/api/department/all",
                 type: "GET",
                 success: function (data) {
                     for (var i = 0; i < data.length; i++)
                     {
-                        createEmployeeRow(data[i]);
+                        createRow(data[i]);
                     }
                 },
                 error: function(e)
@@ -25,25 +25,17 @@
             });            
         });
 
-        function createEmployeeRow(employee) {
-            
-            var dob = new Date(employee.DateOfBirth);
-
+        function createRow(departments) {
             $("<div><span>" +
-                employee.Name +
-            "</span><span>" +
-                 (dob.getMonth()+ 1) + "/" + (dob.getDate() + 1) + "/" + dob.getYear() +
-            "</span><span>" +
-             employee.SocialSecurityNumber +
-            "</span><span> <a onClick='seeDetails(" + employee.EmployeeId + ")'>Details</a></span><span><a  onClick='Fire(" + employee.EmployeeId + ")'>Fire</a></span></div>").appendTo("#employeeTable");
+                departments.Name +
+            "</span><span><a onClick='Remove(" + departments.DepartmentId + ")' >Remove</a></span></div>").appendTo("#table");
         }
 
-        function Fire(id)
-        {
+        function Remove(id) {
             $.ajax({
-                url: "http://localhost:55739/api/employee/delete",
+                url: "http://localhost:55739/api/department/delete",
                 type: "Post",
-                data: JSON.stringify({EmployeeId : id}),
+                data: JSON.stringify({ DepartmentId: id }),
                 contentType: 'application/json; charset=UTF-8',
                 success: function (data) {
                     alert("success");
@@ -60,10 +52,10 @@
     <div>
         <div class="button">
            <a href='New'>
-               <button>New Employee</button>
+               <button>New Department</button>
            </a>
         </div>
-       <div id="employeeTable">
+       <div id="table">
         
         </div>
     </div>

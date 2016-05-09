@@ -1,6 +1,6 @@
-﻿CREATE TABLE [Adress]
+﻿CREATE TABLE [dboAdress]
 (
-	[AddressId] INT NOT NULL PRIMARY KEY, 
+	[AddressId] INTEGER PRIMARY KEY, 
     [Street] NVARCHAR(100) NOT NULL, 
     [City] NVARCHAR(50) NOT NULL, 
     [State] NCHAR(2) NOT NULL, 

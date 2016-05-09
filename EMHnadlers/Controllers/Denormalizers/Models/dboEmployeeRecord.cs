@@ -11,7 +11,7 @@ namespace EMAPIHandlers.Controllers.Denormalizers.Models
     {
         public int EmployeeId { get; set; }
         public int DepartmentId { get; set; }
-        public int LocatonId { get; set; }
+        public int LocationId { get; set; }
         public int SupervisorId { get; set; }
         public bool IsSupervisor { get; set; }
         public double Salary { get; set; }

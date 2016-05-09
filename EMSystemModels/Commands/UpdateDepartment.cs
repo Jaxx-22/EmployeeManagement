@@ -7,10 +7,8 @@ using System.Runtime.Serialization;
 
 namespace EMSystemModels.Commands
 {
-    [DataContract]
     public class UpdateDepartment : DepartmentCommand
     {
-        [DataMember]
         public string Name { get; set; }
     }
 }

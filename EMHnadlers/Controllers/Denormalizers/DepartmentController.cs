@@ -26,6 +26,7 @@ namespace EMAPIHandlers.Controllers.Denormalizers
             _databaseContex = new Database(m_dbConnection);
         }
 
+        [Route("all")]
         public IList<Department> GetAllDepartments()
         {
             var departs = _databaseContex.Fetch<dboDepartment>("");
@@ -35,30 +36,28 @@ namespace EMAPIHandlers.Controllers.Denormalizers
             {
                 retunList.Add(new Department { DepartmentId = d.DepartmentId, Name = d.Name });
             }
+            _databaseContex.CloseSharedConnection();
 
             return retunList;
         }
 
-        [Route("update")]
-        public void PostUpdateDepartment(UpdateDepartment command)
-        {
-            _databaseContex.Update(new dboDepartment{DepartmentId = command.DepartmentId, Name = command.Name});
-        }
-
         [Route("insert")]
-        public void PostInsertDepartment(CreateDepartment command)
+        public void Insert(CreateDepartment Command)
         {
-            _databaseContex.Insert(new dboDepartment{Name = command.Name});
+            _databaseContex.Insert(new dboDepartment { Name = Command.Name });
+            _databaseContex.CloseSharedConnection();
         }
 
         [Route("delete")]
-        public void PostDeleteDepartment(int id)
+        public void PostDeleteDepartment(DepartmentCommand command)
         {
-            var recordWithDepartment = _databaseContex.Query<dboEmployeeRecord>("WHERE DepartmentId = {0}", id).Count();
+            var id = command.DepartmentId;
+            var recordWithDepartment = _databaseContex.Query<dboEmployeeRecord>(string.Format("WHERE DepartmentId = {0}", id)).Count();
             if (recordWithDepartment == 0)
             {
                 _databaseContex.Delete<dboDepartment>(id);
             }
+            _databaseContex.CloseSharedConnection();
         }
     }
 }

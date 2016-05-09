@@ -7,10 +7,8 @@ using System.Threading.Tasks;
 
 namespace EMSystemModels.Commands
 {
-    [DataContract]
     public class CreateDepartment : DepartmentCommand
     {
-        [DataMember]
         public string Name { get; set; }
     }
 }

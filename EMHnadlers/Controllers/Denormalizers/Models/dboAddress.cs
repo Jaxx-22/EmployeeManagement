@@ -7,6 +7,7 @@ using System.Web;
 namespace EMAPIHandlers.Controllers.Denormalizers.Models
 {
     [TableName("dboAdress")]
+    [PrimaryKey("AddressId", AutoIncrement = true)]
     public class dboAddress
     {
         public int AddressId { get; set; }

@@ -1,6 +1,7 @@
 ﻿using EMAPIHandlers.Controllers.Denormalizers.Models;
 using EMSystemModels.Commands;
 using EMSystemModels.Models;
+using Newtonsoft.Json.Linq;
 using PetaPoco;
 using System;
 using System.Collections.Generic;
@@ -28,7 +29,26 @@ namespace EMAPIHandlers.Controllers.Denormalizers
 
         public Employee GetEmployee(int id)
         {
-            return fetchEmployee(id);
+            var emp = fetchEmployee(id);
+            _databaseContex.CloseSharedConnection();
+            return emp;
+        }
+
+        [Route("supervisor")]
+        public IList<Supervisor> GetSupervisors()
+        {
+            var empIds = _databaseContex.Fetch<int>("Select EmployeeId From dboEmployeeRecord WHERE IsSupervisor = 1");
+            var retunList = new List<Supervisor>();
+
+            foreach (var id in empIds)
+            {
+                var name = _databaseContex.Fetch<string>(string.Format("Select Name From dboPersonalInformation WHERE employeeId = {0}", id)).First();
+                retunList.Add(new Supervisor{SupervisorId = id, SupervisorName = name });
+            }
+
+            _databaseContex.CloseSharedConnection();
+
+            return retunList;
         }
 
         [Route("all")]
@@ -42,6 +62,8 @@ namespace EMAPIHandlers.Controllers.Denormalizers
                 retunList.Add(fetchEmployee(id));
             }
 
+            _databaseContex.CloseSharedConnection();
+
             return retunList;
         }
 
@@ -51,7 +73,7 @@ namespace EMAPIHandlers.Controllers.Denormalizers
             var emp = new Employee();
             emp.EmployeeId = id;
 
-            var pi = _databaseContex.First<dboPersonalInformation>(id.ToString());
+            var pi = _databaseContex.Fetch<dboPersonalInformation>(string.Format("WHERE EmployeeId = {0}", id)).First();
             emp.Name = pi.Name;
             emp.DateOfBirth = pi.DateOfBirth;
             emp.SocialSecurityNumber = pi.SocialSecurityNumber;
@@ -65,17 +87,16 @@ namespace EMAPIHandlers.Controllers.Denormalizers
         private List<EmployeeRecord> fetchRecords(int id)
         {
             var returnList = new List<EmployeeRecord>();
-            var records = _databaseContex.Fetch<dboEmployeeRecord>("WHERE EmployeeId = {0}", id);
+            var records = _databaseContex.Fetch<dboEmployeeRecord>(string.Format("WHERE EmployeeId = {0}", id));
             foreach(var r in records)
             {
-                returnList.Add( new EmployeeRecord
+                returnList.Add(new EmployeeRecord
                 {
                     HireDate = r.HireDate,
                     IsSupervisor = r.IsSupervisor,
                     Salary = r.Salary,
-                    SupervisorId = r.SupervisorId,
-                    SupervisorName = r.SupervisorName,
-                    Location = fetchLocation(r.LocatonId),
+                    Supervisor = new Supervisor { SupervisorId = r.SupervisorId, SupervisorName = r.SupervisorName },
+                    Location = fetchLocation(r.LocationId),
                     Department = fetchDepartment(r.DepartmentId)
                 });
             }
@@ -84,19 +105,19 @@ namespace EMAPIHandlers.Controllers.Denormalizers
 
         private Department fetchDepartment(int id)
         {
-            var depa = _databaseContex.First<dboDepartment>(id.ToString());
+            var depa = _databaseContex.First<dboDepartment>(string.Format("WHERE DepartmentId = {0}", id));
             return new Department { DepartmentId = id, Name = depa.Name };
         }
 
         private Location fetchLocation(int id)
         {
-            var loca = _databaseContex.First<dboLocation>(id.ToString());
+            var loca = _databaseContex.First<dboLocation>(string.Format("WHERE LocationId = {0}", id));
             return new Location { LocationId = id, Name = loca.Name, Address = fetchAddress(loca.AddressId) };
         }
 
         private Address fetchAddress(int id)
         {
-            var add = _databaseContex.First<dboAddress>(id.ToString());
+            var add = _databaseContex.First<dboAddress>(string.Format("WHERE AddressId = {0}", id));
 
             return new Address { AddressId = id, City = add.City, State = add.State, Street = add.Street, zip = add.zip };
         }
@@ -104,7 +125,7 @@ namespace EMAPIHandlers.Controllers.Denormalizers
         private List<Address> fetchAddresses(int id)
         {
             var returnList = new List<Address>();
-            var addIds = _databaseContex.Fetch<dboEmployeeAddress>("WHERE EmployeeId = {0}", id.ToString()).Select(a => (int)a.AddressId);
+            var addIds = _databaseContex.Fetch<dboEmployeeAddress>(string.Format("WHERE EmployeeId = {0}", id.ToString())).Select(a => (int)a.AddressId);
 
 
             foreach (var add in addIds)
@@ -116,23 +137,26 @@ namespace EMAPIHandlers.Controllers.Denormalizers
         }
 
         [Route("delete")]
-        public void PostDeleteEmployee(int id)
+        public void PostDeleteEmployee(EmployeeCommand Command)
         {
+            var id = Command.EmployeeId;
             _databaseContex.Delete<dboPersonalInformation>(id);
-            _databaseContex.Delete<dboEmployeeRecord>(id);
-            var addresses = _databaseContex.Fetch<dboEmployeeAddress>("WHERE EmployeeId = {0}", id);
+            _databaseContex.Delete<dboEmployeeRecord>(string.Format("WHERE EmployeeId = {0}", id));
+            var addresses = _databaseContex.Fetch<dboEmployeeAddress>(string.Format("WHERE EmployeeId = {0}", id));
             foreach(var address in addresses)
             {
                 _databaseContex.Delete<dboAddress>(address.AddressId);
             }
 
-            _databaseContex.Delete<dboEmployeeAddress>("WHERE EmployeeId = {0}", id);
+            _databaseContex.Delete<dboEmployeeAddress>(string.Format("WHERE EmployeeId = {0}", id));
+
+            _databaseContex.CloseSharedConnection();
         }
 
         [Route("create")]
         public void PostCreateEmployee(CreateNewEmployee command)
         {
-            var employeeId = (int) _databaseContex.Insert(new dboPersonalInformation
+            var employeeId = _databaseContex.Insert(new dboPersonalInformation
             {
                 Name = command.Employee.Name,
                 DateOfBirth = command.Employee.DateOfBirth,
@@ -141,7 +165,7 @@ namespace EMAPIHandlers.Controllers.Denormalizers
 
             foreach (var address in command.Adresses)
             {
-                var newAddressId = (int)_databaseContex.Insert(new dboAddress
+                var newAddressId = _databaseContex.Insert(new dboAddress
                 {
                     City = address.City,
                     State = address.State,
@@ -151,8 +175,8 @@ namespace EMAPIHandlers.Controllers.Denormalizers
 
                 _databaseContex.Insert(new dboEmployeeAddress
                 {
-                    EmployeeId = employeeId,
-                    AddressId = newAddressId
+                    EmployeeId = Convert.ToInt32(employeeId),
+                    AddressId = Convert.ToInt32(newAddressId)
                 });
             }
 
@@ -160,16 +184,18 @@ namespace EMAPIHandlers.Controllers.Denormalizers
             {
                 _databaseContex.Insert(new dboEmployeeRecord
                 {
-                    EmployeeId = employeeId,
+                    EmployeeId = Convert.ToInt32(employeeId),
                     DepartmentId = r.Department.DepartmentId.Value,
                     HireDate = r.HireDate,
                     IsSupervisor = r.IsSupervisor,
-                    LocatonId = r.Location.LocationId,
+                    LocationId = r.Location.LocationId,
                     Salary = r.Salary,
-                    SupervisorId = r.SupervisorId,
-                    SupervisorName = r.SupervisorName
+                    SupervisorId = r.Supervisor.SupervisorId,
+                    SupervisorName = r.Supervisor.SupervisorName
                 });
             }
+
+            _databaseContex.CloseSharedConnection();
         }
 
         [Route("personal")]
@@ -182,6 +208,8 @@ namespace EMAPIHandlers.Controllers.Denormalizers
                 DateOfBirth = command.Employee.DateOfBirth,
                 SocialSecurityNumber = command.Employee.SocialSecurityNumber
             });
+
+            _databaseContex.CloseSharedConnection();
         }
 
         [Route("record")]
@@ -190,7 +218,7 @@ namespace EMAPIHandlers.Controllers.Denormalizers
             foreach (var r in command.Records)
             {
                 var exsits = _databaseContex.Exists<dboEmployeeRecord>(
-                    "WHERE EmployeeId = {0} AND DepartmentId = {1}",command.EmployeeId, r.Department.DepartmentId.Value);
+                    string.Format("WHERE EmployeeId = {0} AND DepartmentId = {1}",command.EmployeeId, r.Department.DepartmentId.Value));
                 if (exsits)
                 {
                     _databaseContex.Update(new dboEmployeeRecord
@@ -199,10 +227,10 @@ namespace EMAPIHandlers.Controllers.Denormalizers
                         DepartmentId = r.Department.DepartmentId.Value,
                         HireDate = r.HireDate,
                         IsSupervisor = r.IsSupervisor,
-                        LocatonId = r.Location.LocationId,
+                        LocationId = r.Location.LocationId,
                         Salary = r.Salary,
-                        SupervisorId = r.SupervisorId,
-                        SupervisorName = r.SupervisorName
+                        SupervisorId = r.Supervisor.SupervisorId,
+                        SupervisorName = r.Supervisor.SupervisorName
                     });
                 }
                 else
@@ -213,18 +241,20 @@ namespace EMAPIHandlers.Controllers.Denormalizers
                         DepartmentId = r.Department.DepartmentId.Value,
                         HireDate = r.HireDate,
                         IsSupervisor = r.IsSupervisor,
-                        LocatonId = r.Location.LocationId,
+                        LocationId = r.Location.LocationId,
                         Salary = r.Salary,
-                        SupervisorId = r.SupervisorId,
-                        SupervisorName = r.SupervisorName
+                        SupervisorId = r.Supervisor.SupervisorId,
+                        SupervisorName = r.Supervisor.SupervisorName
                     });
                 }
             }
 
             foreach(var r in command.RemovedRecords)
             {
-                _databaseContex.Delete<dboEmployeeRecord>("WHERE EmployeeId = {0} AND DepartmentId = {1}", command.EmployeeId, r);
+                _databaseContex.Delete<dboEmployeeRecord>(string.Format("WHERE EmployeeId = {0} AND DepartmentId = {1}", command.EmployeeId, r));
             }
+
+            _databaseContex.CloseSharedConnection();
         }
 
         [Route("address")]
@@ -265,9 +295,10 @@ namespace EMAPIHandlers.Controllers.Denormalizers
 
             foreach(var addressId in command.RemovedAddress)
             {
-                _databaseContex.Delete<dboEmployeeAddress>("WHERE EmployeeId = {0} AND AddressId = {1}", command.EmployeeId,addressId);
+                _databaseContex.Delete<dboEmployeeAddress>(string.Format("WHERE EmployeeId = {0} AND AddressId = {1}", command.EmployeeId,addressId));
                 _databaseContex.Delete<dboAddress>(addressId);
             }
-        }     
+            _databaseContex.CloseSharedConnection();
+        }        
     }
 }
